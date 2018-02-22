@@ -207,7 +207,7 @@ private:
 
     Mutex mLock;
 
-    char *mTrackName;
+    char mTrackName[6];
     sp<AMessage> mTextNotify;
     sp<AMessage> mSourceNotify;
 
@@ -251,7 +251,7 @@ private:
     sp<DashPlayerStats> mStats;
 
     void sendTextPacket(sp<ABuffer> accessUnit, status_t err);
-    void getTrackName(int track, char* name);
+    void getTrackName(int track, char (&name)[6]);
     void prepareSource();
 
     struct QueueEntry {

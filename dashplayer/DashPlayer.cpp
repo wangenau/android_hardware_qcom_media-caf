@@ -86,7 +86,6 @@ DashPlayer::DashPlayer()
       mStats(NULL),
       mBufferingNotification(false),
       mSRid(0) {
-      mTrackName = new char[6];
 }
 
 DashPlayer::~DashPlayer() {
@@ -105,10 +104,6 @@ DashPlayer::~DashPlayer() {
     if(mStats != NULL) {
         mStats->logFpsSummary();
         mStats = NULL;
-    }
-    if (mTrackName != NULL) {
-       delete[] mTrackName;
-       mTrackName = NULL;
     }
 }
 
@@ -1703,27 +1698,27 @@ void DashPlayer::sendTextPacket(sp<ABuffer> accessUnit,status_t err)
     notifyListener(MEDIA_TIMED_TEXT, 0, mFrameType, &parcel);
 }
 
-void DashPlayer::getTrackName(int track, char* name)
+void DashPlayer::getTrackName(int track, char (&name)[6])
 {
     if( track == kAudio)
     {
-      memset(name,0x00,6);
       strlcpy(name, "audio",6);
     }
     else if( track == kVideo)
     {
-      memset(name,0x00,6);
       strlcpy(name, "video",6);
     }
     else if( track == kText)
     {
-      memset(name,0x00,6);
-      strlcpy(name, "text",5);
+      strlcpy(name, "text",6);
     }
     else if (track == kTrackAll)
     {
-      memset(name,0x00,6);
-      strlcpy(name, "all",4);
+      strlcpy(name, "all",6);
+    }
+    else
+    {
+      strlcpy(name, "ERROR",6);
     }
 }
 
